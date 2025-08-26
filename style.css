@@ -1,0 +1,152 @@
+/* Custom styles */
+
+/* Custom font for the entire site */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Full Page Hero Section --- */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* The gradient overlay is now applied directly to the hero */
+    background: linear-gradient(rgba(10, 20, 40, 0.8), rgba(10, 20, 40, 0.8));
+}
+
+/* The ::before pseudo-element holds the background image for the parallax effect. */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('image.webp');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    z-index: -1; /* Place it behind the hero content and overlay */
+    /* Use a CSS variable for the transform. JS will update this variable. */
+    transform: translateY(var(--parallax-y, 0));
+}
+
+/* Keyframe animation for initial page load fade-in effect */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Class to apply the fadeIn animation */
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* New animation for hero elements */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+    animation-delay: var(--delay);
+    opacity: 0; /* Start hidden */
+}
+
+/* --- Scroll Animation Styles --- */
+/* Base styles for elements that will animate on scroll. They start invisible and shifted. */
+.scroll-animate {
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+/* Class added by JavaScript when element is in view, making it visible and returning it to its original position. */
+.scroll-animate.is-visible {
+    opacity: 1;
+    transform: none;
+}
+/* Specific animation directions */
+.scroll-fade-up {
+    transform: translateY(40px);
+}
+.scroll-fade-left {
+    transform: translateX(-40px);
+}
+.scroll-fade-right {
+    transform: translateX(40px);
+}
+.scroll-zoom-in {
+    transform: scale(0.9);
+}
+
+/* --- Active Nav Link Styles --- */
+/* Active state for desktop navigation links. Overrides default gray color. */
+#desktop-menu a.nav-active {
+    color: #2563EB; /* Tailwind's text-blue-600 */
+}
+
+/* Active state for mobile navigation links */
+#mobile-menu a.nav-active {
+    color: #2563EB; /* Tailwind's text-blue-600 */
+    background-color: #eff6ff; /* Tailwind's blue-50 */
+}
+
+/* --- WhatsApp Floating Action Button --- */
+#whatsapp-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #25D366; /* Official WhatsApp Green */
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem; /* Larger icon */
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-in-out;
+    transform: scale(0) rotate(-90deg); /* Start hidden and rotated */
+    opacity: 0;
+}
+
+#whatsapp-fab.visible {
+    transform: scale(1) rotate(0deg); /* Animate to visible state */
+    opacity: 1;
+}
+
+/* --- Always-Visible Navigation Bar --- */
+/* These rules override the dynamic scroll behavior to make the nav bar permanently visible. */
+#main-nav {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Replicates Tailwind's shadow-md */
+}
+
+/* Adjust padding and logo size to the compact, scrolled state */
+#main-nav .container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+#main-nav #nav-logo {
+    height: 3rem; /* 48px */
+}
+
+/* Override the default white link color for the transparent state */
+#main-nav #desktop-menu a.nav-link {
+    color: #1f2937; /* Tailwind's gray-800 */
+}
+
+/* Set the mobile menu button color for the solid nav bar */
+#main-nav #mobile-menu-button {
+    color: #4b5563; /* Tailwind's gray-600 */
+}
